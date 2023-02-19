@@ -9,9 +9,11 @@ from typing import Tuple
 
 import util.util_methods as U
 import webrequests.webrequests as R
+import moving_averages as MA
 
 
-_BASE_URL_ = "https://query2.finance.yahoo.com"
+_HOST_URL_ = "https://query2.finance.yahoo.com"
+_HISTORICAL_DATA_URL_ = "v8/finance/chart"
 _UNIX_TIMESTAMP_1900_ = -2208994789 
 
 
@@ -28,7 +30,7 @@ def convert_data_to_dataframe(data, timestamp: list) -> pd.DataFrame:
 
 
 def get_historical_data(ticker: str, interval: str) -> Tuple[pd.DataFrame, dict]:
-    url = "{}/v8/finance/chart/{}".format(_BASE_URL_, ticker)
+    url = "{}/{}/{}".format(_HOST_URL_, _HISTORICAL_DATA_URL_, ticker)
     
     start_timestamp = _UNIX_TIMESTAMP_1900_
     end_timestamp = int(time.time())
@@ -41,50 +43,18 @@ def get_historical_data(ticker: str, interval: str) -> Tuple[pd.DataFrame, dict]
         return pd.DataFrame(), {}
 
     response_dict = json.loads(response.text)
-    chart = response_dict["chart"]
-    results = chart["result"]
-    data = results[0]
+    data = response_dict["chart"]["result"][0]
+    
     metadata = data["meta"]
     timestamp = data["timestamp"]
-    data = data["indicators"]
-    data = data["quote"]
-    data = data[0]
+    data = data["indicators"]["quote"][0]
+    
     return convert_data_to_dataframe(data, timestamp), metadata
 
 
-def get_simple_moving_averages(prices: pd.DataFrame, column: str, window_size: int) -> list:
-    simple_moving_average = prices.loc[:, column].rolling(window = window_size).mean().tolist()
-    return simple_moving_average
-
-
-def get_current_simple_moving_average(prices: pd.DataFrame, column: str, window_size: int) -> float:
-    simple_moving_averages = get_simple_moving_averages(prices, column, window_size)
-    return simple_moving_averages[-1]
-
-
-def get_exponential_moving_averages(prices: pd.DataFrame, column: str, window_size: int) -> list:
-    exponential_moving_average = prices.loc[:, column].ewm(span = window_size).mean().tolist()
-    return exponential_moving_average
-
-
-def get_current_exponential_moving_average(prices: pd.DataFrame, column: str, window_size: int) -> float:
-    exponential_moving_averages = get_exponential_moving_averages(prices, column, window_size)
-    return exponential_moving_averages[-1]
-
-
-def get_moving_average(type: str):
-    if type == "SMA":
-        return get_current_simple_moving_average
-    elif type == "EMA":
-        return get_current_exponential_moving_average
-    else:
-        log.warning("Only SMA and EMA is supported. Using SMA as default")
-        return get_current_simple_moving_average
-
-
 def print_technical_chart_info(df: pd.DataFrame, column: str, currency: str, last_close_price: float, interval: str) -> None:
-    ema = get_moving_average("EMA")
-    sma = get_moving_average("SMA")
+    ema = MA.get_moving_average("EMA")
+    sma = MA.get_moving_average("SMA")
     
     ema_20 = U.get_rounded_float_value(ema(df, column, 20), 2)
     ema_40 = U.get_rounded_float_value(ema(df, column, 40), 2)
