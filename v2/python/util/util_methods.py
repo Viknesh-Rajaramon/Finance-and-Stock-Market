@@ -1,4 +1,4 @@
-from .util_constants import _DAY_IN_SECONDS_, _WEEK_IN_SECONDS_, _MONTH_IN_SECONDS_, _CURRENCY_DICT_, _INTERVAL_DICT_
+from .util_constants import _DAY_IN_SECONDS_, _WEEK_IN_SECONDS_, _MONTH_IN_SECONDS_, _CURRENCY_DICT_, _INTERVAL_DICT_, _ONE_MILLION_
 from decimal import Decimal
 
 
@@ -34,3 +34,8 @@ def get_rounded_float_value(number: float, precision: int) -> Decimal:
     decimalValue = Decimal(number)
     roundedNumber = decimalValue.quantize(Decimal(rounding_string))
     return roundedNumber
+
+
+def convert_to_millions(num: int) -> Decimal:
+    millions = num / _ONE_MILLION_
+    return get_rounded_float_value(millions, 2)
