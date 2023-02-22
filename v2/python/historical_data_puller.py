@@ -10,6 +10,7 @@ from typing import Tuple
 import util.util_methods as U
 import webrequests.webrequests as R
 import moving_averages as MA
+import print_template as T
 
 
 _HOST_URL_ = "https://query2.finance.yahoo.com"
@@ -55,26 +56,22 @@ def get_historical_data(ticker: str, interval: str) -> Tuple[pd.DataFrame, dict]
 def print_technical_chart_info(df: pd.DataFrame, column: str, currency: str, last_close_price: float, interval: str) -> None:
     ema = MA.get_moving_average("EMA")
     sma = MA.get_moving_average("SMA")
-    
-    ema_20 = U.get_rounded_float_value(ema(df, column, 20), 2)
-    ema_40 = U.get_rounded_float_value(ema(df, column, 40), 2)
-    
-    sma_50 = U.get_rounded_float_value(sma(df, column, 50), 2)
-    sma_100 = U.get_rounded_float_value(sma(df, column, 100), 2)
-    sma_150 = U.get_rounded_float_value(sma(df, column, 150), 2)
-    sma_200 = U.get_rounded_float_value(sma(df, column, 200), 2)
 
-    interval_alias = U.get_interval_alias(interval)
+    template_params = {
+        "interval_alias": U.get_interval_alias(interval),
+        "last_close_price": last_close_price,
+        "currency": currency,
+        "ema_20": U.get_rounded_float_value(ema(df, column, 20), 2),
+        "ema_40": U.get_rounded_float_value(ema(df, column, 40), 2),
+        "sma_50": U.get_rounded_float_value(sma(df, column, 50), 2),
+        "sma_100": U.get_rounded_float_value(sma(df, column, 100), 2),
+        "sma_150": U.get_rounded_float_value(sma(df, column, 150), 2),
+        "sma_200": U.get_rounded_float_value(sma(df, column, 200), 2),
+    }
 
-    print("###############################")
-    print("--------Interval : {}-------\n".format(interval_alias))
-    print(">>> Price : {} {} <<<\n".format(currency, last_close_price))
-    print("EMA 20  : {} {}".format(currency, ema_20))
-    print("EMA 40  : {} {}".format(currency, ema_40))
-    print("SMA 50  : {} {}".format(currency, sma_50))
-    print("SMA 100 : {} {}".format(currency, sma_100))
-    print("SMA 150 : {} {}".format(currency, sma_150))
-    print("SMA 200 : {} {}".format(currency, sma_200))
+    template = T.get_technical_chart_print_template()
+    info = template.substitute(template_params)
+    print(info)
     return
 
 
