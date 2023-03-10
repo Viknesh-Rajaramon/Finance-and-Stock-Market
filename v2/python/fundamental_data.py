@@ -12,7 +12,7 @@ import webrequests.webrequests as R
 
 _HOST_URL_ = "https://query2.finance.yahoo.com"
 _FUNDAMENTAL_DATA_URL_ = "v10/finance/quoteSummary"
-_MODULES_ = ["assetProfile", "summaryDetail", "price", "incomeStatementHistory", "incomeStatementHistoryQuarterly", "balanceSheetHistory", "balanceSheetHistoryQuarterly", "cashflowStatementHistory", "cashflowStatementHistoryQuarterly", "defaultKeyStatistics", "financialData", "earnings", "earningsTrend", "industryTrend", "indexTrend", "sectorTrend"]
+_MODULES_ = ["assetProfile", "summaryDetail", "price", "defaultKeyStatistics", "financialData", "earningsTrend", "industryTrend", "indexTrend", "sectorTrend"]
 
 
 
