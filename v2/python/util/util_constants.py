@@ -15,3 +15,13 @@ _INTERVAL_DICT_ = {
     "1wk" : "1 Week",
     "1mo" : "1 Month",
 }
+
+
+_GROWTH_ESTIMATES_PERIOD_DICT_ = {
+    "0q": "Current Qtr.",
+    "+1q": "Next Qtr.",
+    "0y": "Current Year",
+    "+1y": "Next Year",
+    "+5y": "Next 5 Years (per annum)",
+    "-5y": "Past 5 Years (per annum)",
+}
