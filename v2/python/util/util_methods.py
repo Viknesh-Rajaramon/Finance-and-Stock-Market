@@ -1,4 +1,4 @@
-from .util_constants import _DAY_IN_SECONDS_, _WEEK_IN_SECONDS_, _MONTH_IN_SECONDS_, _CURRENCY_DICT_, _INTERVAL_DICT_, _ONE_MILLION_
+from .util_constants import _DAY_IN_SECONDS_, _WEEK_IN_SECONDS_, _MONTH_IN_SECONDS_, _CURRENCY_DICT_, _INTERVAL_DICT_, _ONE_MILLION_, _GROWTH_ESTIMATES_PERIOD_DICT_
 from decimal import Decimal
 
 
@@ -39,3 +39,15 @@ def get_rounded_float_value(number: float, precision: int) -> Decimal:
 def convert_to_millions(num: int) -> Decimal:
     millions = num / _ONE_MILLION_
     return get_rounded_float_value(millions, 2)
+
+
+def get_dict_keys(d: dict) -> list:
+    return list(d.keys())
+
+
+def remove_keys_from_dict(data: dict, keys: list) -> dict:
+    for key in keys:
+        if data.get(key, None) is not None:
+            del data[key]
+    
+    return data
