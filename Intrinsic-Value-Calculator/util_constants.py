@@ -24,10 +24,6 @@ STOCK_DETAILS_URL = "v7/finance/quote"
 DEFAULT_KEY_STATISTICS_MODULE_NAME = "defaultKeyStatistics"
 EARNINGS_TREND_MODULE_NAME = "earningsTrend"
 
-
-RISK_FREE_RATE = 7.34 / 100
-AVERAGE_MARKET_RISK_PREMIUM = 1.65 / 100
-
 GROWTH_RATE_11_TO_20_YR = 7.2 / 100
 
 ONE_MILLION = 1000000
@@ -35,3 +31,7 @@ ONE_MILLION = 1000000
 ALTERNATE_FIELD_NAMES = {
     "quarterlyCashCashEquivalentsAndShortTermInvestments": ["quarterlyCashCashEquivalentsAndFederalFundsSold"]
 }
+
+# As of 29th Jun 2024
+RISK_FREE_RATE = 7.05 / 100
+AVERAGE_MARKET_RISK_PREMIUM = 1.47 / 100
