@@ -207,7 +207,7 @@ class Intrinsic_Value_Calculator():
 
 
 if __name__ == "__main__":
-    tickers = ["AMBUJACEM", "ASIANPAINT", "BRITANNIA", "BSE", "CDSL", "COLPAL", "CROMPTON", "DABUR", "DMART", "EICHERMOT", "HAVELLS", "HCLTECH", "HDFCBANK", "HEROMOTOCO", "HINDUNILVR", "INFY", "IRCTC", "KOTAKBANK", "PIDILITIND", "RAMCOCEM", "RELIANCE", "SBICARD", "STARHEALTH", "SUNTV", "TCS", "TVSMOTOR"]
+    tickers = ["AMBUJACEM", "ASIANPAINT", "BRITANNIA", "BSE", "CDSL", "COLPAL", "CROMPTON", "DABUR", "DMART", "EICHERMOT", "HAVELLS", "HCLTECH", "HDFCBANK", "HEROMOTOCO", "HINDUNILVR", "INFY", "IRCTC", "KOTAKBANK", "PIDILITIND", "RVNL", "RAMCOCEM", "RELIANCE", "SBICARD", "STARHEALTH", "SUNTV", "TCS", "TATAMOTORS", "TITAN", "TVSMOTOR"]
     for t in tickers:
         ticker = t + ".NS"
         iv = Intrinsic_Value_Calculator(ticker)
